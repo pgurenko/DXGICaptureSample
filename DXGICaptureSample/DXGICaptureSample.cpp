@@ -33,11 +33,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	if( FAILED(hr) )
 		return hr;
 
+	int i=0;
 	do
 	{
 		hr = g_DXGIManager.GetOutputBits(pBuf, rcDim);
+		i++;
 	}
-	while (hr == DXGI_ERROR_WAIT_TIMEOUT);
+	while (hr == DXGI_ERROR_WAIT_TIMEOUT || i < 2);
 
 	if( FAILED(hr) )
 	{

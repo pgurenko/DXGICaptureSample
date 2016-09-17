@@ -9,6 +9,9 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <memory>
+
+using namespace std;
 
 #define LOG_FILENAME "logfile.log"
 #define BUF_SIZE 512

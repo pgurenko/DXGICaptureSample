@@ -286,14 +286,26 @@ HRESULT DXGIManager::Init()
 			OutputIter++)
 		{
 			CComQIPtr<IDXGIOutput1> spDXGIOutput1 = *OutputIter;
-			CComQIPtr<IDXGIDevice1> spDXGIDevice = spD3D11Device;
-			if(!spDXGIOutput1 || !spDXGIDevice)
-				continue;
+      if (!spDXGIOutput1)
+      {
+        __L_ERROR("spDXGIOutput1 is NULL");
+        continue;
+      }
+
+      CComQIPtr<IDXGIDevice1> spDXGIDevice = spD3D11Device;
+      if (!spDXGIDevice)
+      {
+        __L_ERROR("spDXGIDevice is NULL");
+        continue;
+      }
 
 			CComPtr<IDXGIOutputDuplication> spDXGIOutputDuplication;
 			hr = spDXGIOutput1->DuplicateOutput(spDXGIDevice, &spDXGIOutputDuplication);
-			if( FAILED(hr) )
-				continue;
+      if (FAILED(hr))
+      {
+        __L_ERROR("Failed to duplicate output hr=%08x", hr);
+        continue;
+      }
 
 			m_vOutputs.push_back(
 				DXGIOutputDuplication((*AdapterIter),
